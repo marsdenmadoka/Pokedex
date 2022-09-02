@@ -1,10 +1,5 @@
 package com.madoka.mypokedexapp.pokemonlist
 
-//import androidx.hilt.navigation.compose.hiltNavGraphViewModel
-//port androidx.navigation.compose.navigate
-//import androidx.hilt.navigation.compose.hiltViewModel
-//import com.google.accompanist.coil.rememberCoilPainter
-
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -21,6 +16,7 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -32,6 +28,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
@@ -42,7 +39,8 @@ import com.madoka.mypokedexapp.ui.theme.RobotoCondensed
 
 @Composable
 fun PokemonListScreen(
-    navController: NavController
+    navController: NavController,
+viewModel: PokemonListViewModel = hiltViewModel()
 ) {
     Surface(
         //picks the color depending on  light mode or dark mode
@@ -64,7 +62,7 @@ fun PokemonListScreen(
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
-                //
+                viewModel.searchPokemonList(it)
             }
             //adding space below our search bar
             Spacer(modifier = Modifier.height(16.dp))
@@ -104,7 +102,8 @@ fun SearchBar(
                 .background(Color.White, CircleShape)
                 .padding(horizontal = 20.dp, vertical = 12.dp)
                 .onFocusChanged {
-                    //isHintDisplayed = it != FocusState.Active && text.isEmpty()
+                 //   isHintDisplayed = it != FocusState.Active && text.isEmpty()
+                    isHintDisplayed != it.isCaptured  && text.isEmpty()
                 }
         )
         if (isHintDisplayed) {
@@ -130,7 +129,7 @@ fun PokemonList(
     val endReached by remember { viewModel.endReached }
     val loadError by remember { viewModel.loadError }
     val isLoading by remember { viewModel.isLoading }
-
+    val isSearching by remember { viewModel.isSearching }
     /**Lazy column is an equivalent of recyclerview in compose*/
     LazyColumn(contentPadding = PaddingValues(16.dp)) {
         val itemCount =
@@ -140,7 +139,7 @@ fun PokemonList(
                 pokemonList.size / 2 + 1
             }
         items(itemCount) {
-            if (it >= itemCount - 1 && !endReached && !isLoading) {
+            if (it >= itemCount - 1 && !endReached && !isLoading && !isSearching) {
                 /** No need of paging library and the huge paging setup in compose instead we use this */
                 viewModel.loadPokemonPaginated()
             }
@@ -153,10 +152,10 @@ fun PokemonList(
         contentAlignment = Center,
         modifier = Modifier.fillMaxSize()
     ) {
-        if(isLoading) {
+        if (isLoading) {
             CircularProgressIndicator(color = MaterialTheme.colors.primary)
         }
-        if(loadError.isNotEmpty()) { //retry
+        if (loadError.isNotEmpty()) { //retry
             RetrySection(error = loadError) {
                 viewModel.loadPokemonPaginated()
             }
@@ -285,6 +284,11 @@ fun RetrySection(
         }
     }
 }
+
+
+
+
+
 
 
 /** Image( painter = rememberCoilPainter(

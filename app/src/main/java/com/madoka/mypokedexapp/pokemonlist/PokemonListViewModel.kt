@@ -13,6 +13,7 @@ import com.madoka.mypokedexapp.repository.PokemonRepository
 import com.madoka.mypokedexapp.util.Constants.PAGE_SIZE
 import com.madoka.mypokedexapp.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -33,18 +34,43 @@ class PokemonListViewModel @Inject constructor(
 
 
     //cachepokemonList to help for searching functionality/ we are saving the fechpokemList as cache here
-    private var cachePokemonList = listOf<PokedexListEntry>()
-    private var isSearchStarting = true
-    var isSearching = mutableStateOf(false)
 
+    private var cachePokemonList = listOf<PokedexListEntry>()
+    private var isSearchStarting =
+        true  //help save our initial pokemon list in the cache only once before we start the search
+       var isSearching = mutableStateOf(false)//will  be true as long as we display the search result
 
 
     init {
         loadPokemonPaginated()
     }
 
-
-    fun searchPokemonList(query:String){}
+   //searching
+    fun searchPokemonList(query: String) {
+        val listToSearch = if(isSearchStarting){
+            PokemonList.value
+        }else{
+            cachePokemonList
+        }
+        viewModelScope.launch(Dispatchers.Default) {
+            if (query.isEmpty()){
+                PokemonList.value = cachePokemonList
+                isSearching.value = false
+                isSearchStarting = true
+                return@launch
+            }
+            val results= listToSearch.filter {
+                it.pokemonName.contains(query.trim(),ignoreCase = true) ||
+                        it.number.toString() == query.trim()
+            }
+            if(isSearchStarting){
+                cachePokemonList = PokemonList.value
+                isSearchStarting = false
+            }
+            PokemonList.value = results
+            isSearching.value=true
+        }
+    }
 
 
     fun loadPokemonPaginated() {
