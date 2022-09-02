@@ -160,7 +160,7 @@ fun PokemonDetailStateWrapper(
             PokemonDetailSection(
                 pokemonInfo = pokemonInfo.data!!,
                 modifier = modifier
-                    .offset(y =(-20).dp)
+                    .offset(y = (-20).dp)
             )
         }
         is Resource.Error -> {
@@ -200,7 +200,7 @@ fun PokemonDetailSection(
         Text(
             text = "#${pokemonInfo.id} ${pokemonInfo.name.capitalize(Locale.ROOT)}",
             fontWeight = FontWeight.Bold,
-            fontSize = 30.sp ,
+            fontSize = 30.sp,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colors.onSurface
         )
@@ -293,10 +293,16 @@ fun PokemonDetailDataItem(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
-        modifier = Modifier
+        modifier = modifier
     ) {
 
-        Icon(painter = dataIcon, contentDescription = null, tint = MaterialTheme.colors.surface)
+        //  Icon(painter = dataIcon, contentDescription = null, tint = MaterialTheme.colors.surface)
+        Icon(painter = dataIcon, contentDescription = null, tint = MaterialTheme.colors.onSurface)
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = "$dataValue$dataUnit",
+            color = MaterialTheme.colors.onSurface
+        )
     }
 
 
