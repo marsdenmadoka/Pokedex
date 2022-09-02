@@ -7,6 +7,7 @@
         <entry key="../../../../../layout/compose-model-1661971437859.xml" value="1.1" />
         <entry key="../../../../../layout/compose-model-1661971527886.xml" value="0.2" />
         <entry key="../../../../../layout/compose-model-1661972037417.xml" value="1.0" />
+        <entry key="app/src/main/res/drawable/ic_placeholder.xml" value="0.1" />
       </map>
     </option>
   </component>
@@ -15,5 +16,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="SuppressABINotification">
+    <option name="modulesWithSuppressedNotConfigured">
+      <set>
+        <option value="MyPokedexApp.app" />
+      </set>
+    </option>
   </component>
 </project>

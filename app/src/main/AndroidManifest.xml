@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.madoka.mypokedexapp">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:name=".PokedexApplication"
         android:allowBackup="true"
