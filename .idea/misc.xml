@@ -7,7 +7,12 @@
         <entry key="../../../../../layout/compose-model-1661971437859.xml" value="1.1" />
         <entry key="../../../../../layout/compose-model-1661971527886.xml" value="0.2" />
         <entry key="../../../../../layout/compose-model-1661972037417.xml" value="1.0" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_height.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_international_pok_mon_logo.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_placeholder.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_weight.xml" value="0.1" />
       </map>
     </option>
   </component>

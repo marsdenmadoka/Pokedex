@@ -103,7 +103,7 @@ fun SearchBar(
                 .padding(horizontal = 20.dp, vertical = 12.dp)
                 .onFocusChanged {
                  //   isHintDisplayed = it != FocusState.Active && text.isEmpty()
-                    isHintDisplayed != it.isCaptured  && text.isEmpty()
+                    isHintDisplayed != it.isCaptured  && text.isNotEmpty()
                 }
         )
         if (isHintDisplayed) {
