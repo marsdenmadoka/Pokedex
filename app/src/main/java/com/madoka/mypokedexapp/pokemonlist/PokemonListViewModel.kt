@@ -102,7 +102,7 @@ class PokemonListViewModel @Inject constructor(
                     PokemonList.value += pokedexEntries
                 }
                 is Resource.Error -> {
-                   // loadError.value = result.message!!
+                    // loadError.value = result.message!!
                     loadError.value = result.message.toString()
                     isLoading.value = false
                 }
@@ -113,13 +113,13 @@ class PokemonListViewModel @Inject constructor(
 
     //calculate the dominant color
     fun calcDominantColor(drawable: Drawable, onFinish: (Color) -> Unit) {
-        viewModelScope.launch {
-            val bmp = (drawable as BitmapDrawable).bitmap.copy(Bitmap.Config.ARGB_8888, true)
-            Palette.from(bmp).generate() { palette ->
-                palette?.dominantSwatch?.rgb?.let { colorValue ->
-                    onFinish(Color(colorValue))
-                }
+
+        val bmp = (drawable as BitmapDrawable).bitmap.copy(Bitmap.Config.ARGB_8888, true)
+        Palette.from(bmp).generate() { palette ->
+            palette?.dominantSwatch?.rgb?.let { colorValue ->
+                onFinish(Color(colorValue))
             }
         }
+
     }
 }

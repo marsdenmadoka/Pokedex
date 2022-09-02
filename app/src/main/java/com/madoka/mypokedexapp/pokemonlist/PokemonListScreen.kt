@@ -15,8 +15,8 @@ import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -28,7 +28,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
@@ -40,7 +39,7 @@ import com.madoka.mypokedexapp.ui.theme.RobotoCondensed
 @Composable
 fun PokemonListScreen(
     navController: NavController,
-viewModel: PokemonListViewModel = hiltViewModel()
+    viewModel: PokemonListViewModel = hiltViewModel()
 ) {
     Surface(
         //picks the color depending on  light mode or dark mode
@@ -102,8 +101,8 @@ fun SearchBar(
                 .background(Color.White, CircleShape)
                 .padding(horizontal = 20.dp, vertical = 12.dp)
                 .onFocusChanged {
-                 //   isHintDisplayed = it != FocusState.Active && text.isEmpty()
-                    isHintDisplayed != it.isCaptured  && text.isNotEmpty()
+                    //   isHintDisplayed = it != FocusState.Active && text.isEmpty()
+                    isHintDisplayed != it.isCaptured && text.isNotEmpty()
                 }
         )
         if (isHintDisplayed) {
@@ -174,6 +173,7 @@ fun PokedexEntry(
     val defaultDominantColor = MaterialTheme.colors.surface
     var dominantColor by remember {
         mutableStateOf(defaultDominantColor)
+
     }
 
     Box(contentAlignment = Center,
@@ -195,37 +195,35 @@ fun PokedexEntry(
                 )
             }
     ) {
-        Column {
+        Column() {
+
+            if (viewModel.isLoading.value) {
+                CircularProgressIndicator(
+                    color = MaterialTheme.colors.primary,
+                    modifier = Modifier
+                        .scale(0.5f)
+                        .align(CenterHorizontally)
+                )
+            }
 
             Image(
                 painter = rememberAsyncImagePainter(
                     ImageRequest.Builder(LocalContext.current)
                         .data(entry.imageUrl)
                         .crossfade(true)
-//                    .target {
-//                        viewModel.calcDominantColor(it) { color ->
-//                            dominantColor = color
+//                        .target {
+//                            viewModel.calcDominantColor(it) { color ->
+//                                dominantColor = color
+//                            }
 //                        }
-//                    }
-                        .apply(block = fun ImageRequest.Builder.() {
-                            //  placeholder(R.drawable.ic_placeholder)
-                            crossfade(true)
-                        })
                         .build()
                 ),
-
                 contentDescription = entry.pokemonName,
                 modifier = Modifier
                     .size(120.dp)
                     .align(CenterHorizontally)
-            )
 
-//                CircularProgressIndicator(
-//                    color = MaterialTheme.colors.primary,
-//                    modifier = Modifier.scale(0.5f)
-//                        .align(CenterHorizontally)
-//
-//                )
+            )
 
             Text(
                 text = entry.pokemonName,
@@ -234,8 +232,10 @@ fun PokedexEntry(
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
             )
+
         }
     }
+
 }
 
 @Composable
@@ -286,11 +286,6 @@ fun RetrySection(
 }
 
 
-
-
-
-
-
 /** Image( painter = rememberCoilPainter(
 request = ImageRequest.Builder(LocalContext.current)
 .data(entry.imageUrl)
@@ -334,5 +329,18 @@ modifier = Modifier.scale(0.5f)
 //                    modifier = Modifier.scale(0.5f)
 //                )
 //            }
+
+
+
+//AsyncImage(
+//model = imageURL,
+//contentDescription = null,
+//onSuccess = { success ->
+//    val drawable = success.result.drawable
+//}
+//)
+
+
+
 
 

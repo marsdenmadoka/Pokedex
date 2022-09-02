@@ -166,22 +166,3 @@ fun PokemonDetailStateWrapper(
     }
 }
 
-
-
-
-
-
-
-//                    Image(
-//
-//                        data = it.front_default, //default image from the pokemon
-//                        contentDescription = pokemonInfo.data.name,
-//                        fadeIn = true,
-//                        modifier = Modifier
-//                            .size(pokemonImageSize)
-//                            .offset(y = topPadding)
-//
-//                    )
-
-
-
