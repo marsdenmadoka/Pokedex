@@ -38,37 +38,37 @@ class PokemonListViewModel @Inject constructor(
     private var cachePokemonList = listOf<PokedexListEntry>()
     private var isSearchStarting =
         true  //help save our initial pokemon list in the cache only once before we start the search
-       var isSearching = mutableStateOf(false)//will  be true as long as we display the search result
+    var isSearching = mutableStateOf(false)//will  be true as long as we display the search result
 
 
     init {
         loadPokemonPaginated()
     }
 
-   //searching
+    //searching
     fun searchPokemonList(query: String) {
-        val listToSearch = if(isSearchStarting){
+        val listToSearch = if (isSearchStarting) {
             PokemonList.value
-        }else{
+        } else {
             cachePokemonList
         }
         viewModelScope.launch(Dispatchers.Default) {
-            if (query.isEmpty()){
+            if (query.isEmpty()) {
                 PokemonList.value = cachePokemonList
                 isSearching.value = false
                 isSearchStarting = true
                 return@launch
             }
-            val results= listToSearch.filter {
-                it.pokemonName.contains(query.trim(),ignoreCase = true) ||
+            val results = listToSearch.filter {
+                it.pokemonName.contains(query.trim(), ignoreCase = true) ||
                         it.number.toString() == query.trim()
             }
-            if(isSearchStarting){
+            if (isSearchStarting) {
                 cachePokemonList = PokemonList.value
                 isSearchStarting = false
             }
             PokemonList.value = results
-            isSearching.value=true
+            isSearching.value = true
         }
     }
 
@@ -102,7 +102,8 @@ class PokemonListViewModel @Inject constructor(
                     PokemonList.value += pokedexEntries
                 }
                 is Resource.Error -> {
-                    loadError.value = result.message!!
+                   // loadError.value = result.message!!
+                    loadError.value = result.message.toString()
                     isLoading.value = false
                 }
             }
