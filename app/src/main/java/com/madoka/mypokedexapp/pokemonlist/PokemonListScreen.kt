@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -30,7 +31,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
 import com.madoka.mypokedexapp.R
 import com.madoka.mypokedexapp.models.PokedexListEntry
@@ -102,8 +102,8 @@ fun SearchBar(
                 .background(Color.White, CircleShape)
                 .padding(horizontal = 20.dp, vertical = 12.dp)
                 .onFocusChanged {
-                    //   isHintDisplayed = it != FocusState.Active && text.isEmpty()
-                    isHintDisplayed != it.isCaptured && text.isNotEmpty()
+                    isHintDisplayed = text.isEmpty()
+                   // isHintDisplayed != it.isCaptured && text.isNotEmpty()
                 }
         )
         if (isHintDisplayed) {
@@ -156,7 +156,7 @@ fun PokemonList(
             CircularProgressIndicator(color = MaterialTheme.colors.primary)
         }
         if (loadError.isNotEmpty()) { //retry
-            RetrySection(error = loadError) {
+            RetrySection(error = "No Internet! Try Again" /*loadError*/) {
                 viewModel.loadPokemonPaginated()
             }
         }
@@ -206,25 +206,29 @@ fun PokedexEntry(
                         .align(CenterHorizontally)
                 )
             }
+                Image(
+                    painter = rememberAsyncImagePainter(
+                        ImageRequest.Builder(LocalContext.current)
+                            .data(entry.imageUrl)
+                            .crossfade(true)
+                            .build(),
+                        onSuccess = { success ->
+                            val drawable = success.result.drawable
+                            viewModel.calcDominantColor(drawable) { color ->
+                                dominantColor = color
+                            }
 
-            Image(
-                painter = rememberAsyncImagePainter(
-                    ImageRequest.Builder(LocalContext.current)
-                        .data(entry.imageUrl)
-                        .crossfade(true)
-//                        .target {
-//                            viewModel.calcDominantColor(it) { color ->
-//                                dominantColor = color
-//                            }
-//                        }
-                        .build()
-                ),
-                contentDescription = entry.pokemonName,
-                modifier = Modifier
-                    .size(120.dp)
-                    .align(CenterHorizontally)
+                        }
 
-            )
+                    ) ,
+                    contentDescription = entry.pokemonName,
+                    modifier = Modifier
+                        .size(120.dp)
+                        .align(CenterHorizontally),
+
+
+                    )
+
 
             Text(
                 text = entry.pokemonName,
@@ -287,10 +291,6 @@ fun RetrySection(
 }
 
 
-
-
-
-
 /** Image( painter = rememberCoilPainter(
 request = ImageRequest.Builder(LocalContext.current)
 .data(entry.imageUrl)
@@ -334,7 +334,6 @@ modifier = Modifier.scale(0.5f)
 //                    modifier = Modifier.scale(0.5f)
 //                )
 //            }
-
 
 
 //AsyncImage(

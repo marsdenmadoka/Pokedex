@@ -167,10 +167,11 @@ fun PokemonDetailStateWrapper(
                     .offset(y = (-20).dp)
             )
         }
+
         is Resource.Error -> {
             Text(
                 //text = pokemonInfo.message!!
-                text = pokemonInfo.message.toString(),
+                text = " unexpected error happened! ",/*pokemonInfo.message.toString(),*/
                 color = Color.Red,
                 modifier = modifier
             )
@@ -198,9 +199,10 @@ fun PokemonDetailSection(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
-            .fillMaxWidth()
+            .verticalScroll(scrollState)
+            .fillMaxSize()
             .offset(y = 80.dp)
-            .verticalScroll(rememberScrollState())
+
     ) {
 
         Text(
