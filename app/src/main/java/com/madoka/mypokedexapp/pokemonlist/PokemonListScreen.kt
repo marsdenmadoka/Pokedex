@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
 import com.madoka.mypokedexapp.R
 import com.madoka.mypokedexapp.models.PokedexListEntry
@@ -284,6 +285,10 @@ fun RetrySection(
         }
     }
 }
+
+
+
+
 
 
 /** Image( painter = rememberCoilPainter(

@@ -308,6 +308,14 @@ fun PokemonDetailDataItem(
 
 }
 
+//base stats
+@Composable
+fun PokemonStat(
+    statName:String,
+    statValue:Int
+){
+
+}
 
 
 
