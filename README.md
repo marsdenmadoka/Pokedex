@@ -1,6 +1,5 @@
 
-
-App build to consume  [PokedexApi](https://pokeapi.co/api/v2/)
+An Android app built using Kotlin and clean MVVM architecture to call [PokedexApi](https://pokeapi.co/api/v2/)
 
  This app is build using jetpack compose for UI.
 
@@ -22,11 +21,7 @@ These are the app's screenshots:
 <img src="demo/gif.gif" width=400 />
  
 
-##This app uses the MVVM architecture
- <img src="screenshoots/MVVM Architecture.png" width=400/>
- 
- 
- ##Tech Stack
+## Tech Stack
  
  - [Jetpack Compose](https://developer.android.com/jetpack/compose) - Jetpack Compose is Android’s modern toolkit for building native UI. It simplifies and accelerates UI development on Android. Quickly bring your app to life with less code, powerful tools, and intuitive Kotlin APIs.
 
