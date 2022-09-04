@@ -15,7 +15,7 @@ App build to consume  [PokedexApi](https://pokeapi.co/api/v2/)
 These are the app's screenshots:
 
 <img src="screenshoots/Screenshot1.png" width= 250/> <img src="screenshoots/Screenshot2.png" width=250/>
-<img src="screenshoots/Screenshot2.png" width=250/> 
+<img src="screenshoots/Screenshot3.png" width=250/> 
 
 
 ## Demo
