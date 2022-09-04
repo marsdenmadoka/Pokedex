@@ -21,9 +21,8 @@ These are the app's screenshots:
 ## Demo
 <img src="demo/gif.gif" width=400 />
  
- 
- 
- ##This app uses the MVVM architecture 
+
+##This app uses the MVVM architecture
  <img src="screenshoots/MVVM Architecture.png" width=400/>
  
  
