@@ -4,7 +4,7 @@ An Android app built using Kotlin and clean MVVM architecture to call [PokedexAp
  This app is build using jetpack compose for UI.
 
 ## additional things you can do
- since this app was created for purpose of learning jetpack compose there other additional things we didn't put much focus on:
+ since this app was created for purpose of implementing jetpack compose there other additional things we didn't put much focus on:
 1. Upgrade the app to use  [flow](https://developer.android.com/kotlin/flow) and [livedata](https://developer.android.com/topic/libraries/architecture/livedata) , however this app follows the MVVM architecture 
 2. Upgrade to use new jetpack compose paging library
 
